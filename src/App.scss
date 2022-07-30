@@ -4,9 +4,11 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
-  background: rgb(97, 92, 134);
+  background: #615c86;
   .wrapper {
-    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
     background: rgb(255, 255, 255);
     border-radius: 10px;
     padding: 20px 40px;
@@ -135,7 +137,7 @@ nav {
 .cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: space-around;
   .card {
     display: flex;
     flex-direction: column;
@@ -191,6 +193,212 @@ nav {
       }
       .addItemButton:active {
         background: rgb(97, 92, 134);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .wrapper {
+    width: 1000px;
+  }
+  .categories {
+    li {
+      font-size: 16px;
+    }
+  }
+}
+@media screen and (max-width: 991px) {
+  .wrapper {
+    width: 800px;
+  }
+
+  nav {
+    .headerNav {
+      p {
+        font-size: 16px;
+        padding: 0 7px;
+      }
+    }
+  }
+  .categories {
+    padding: 10px 0;
+    li {
+      font-size: 14px;
+    }
+    .searchBlock {
+      input {
+        width: 140px;
+        font-size: 14px;
+      }
+      img {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+  .cards {
+    .card {
+      width: 200px;
+      .bottomDetails {
+        .addItemButton {
+          width: 80px;
+          .addButtonCount {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 767px) {
+  .wrapper {
+    width: 576px;
+  }
+
+  nav {
+    padding-bottom: 10px;
+    .ghostPng {
+      width: 20px;
+    }
+    .mainLogo {
+      font-size: 20px;
+    }
+    .headerNav {
+      p {
+        font-size: 14px;
+        padding: 0 7px;
+      }
+    }
+    .cartBlock {
+      width: 100px;
+      img {
+        width: 20px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+  .categories {
+    padding: 10px 0;
+    li {
+      font-size: 10px;
+    }
+    .searchBlock {
+      input {
+        width: 140px;
+        height: 30px;
+        font-size: 14px;
+      }
+      img {
+        width: 12px;
+        height: 12px;
+      }
+    }
+    .popupCategory {
+      display: none;
+    }
+  }
+  .cards {
+    .card {
+      width: 140px;
+      height: 240px;
+      p {
+        font-size: 12px;
+      }
+      .bottomDetails {
+        flex-direction: column;
+
+        .addItemButton {
+          width: 80px;
+          margin-top: 6px;
+          .addButtonCount {
+            font-size: 11px;
+          }
+        }
+      }
+      .imageCard {
+        img {
+          width: 100px;
+          height: 100px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .mainWrapper {
+    .wrapper {
+      width: 400px;
+      padding: 20px;
+    }
+  }
+
+  nav {
+    padding-bottom: 10px;
+    .ghostPng {
+      width: 14px;
+    }
+    .mainLogo {
+      padding: 0 2px 0 2px;
+      font-size: 14px;
+    }
+    .headerNav {
+      p {
+        font-size: 10px;
+        padding: 0 7px;
+      }
+    }
+    .cartBlock {
+      width: 70px;
+      padding: 2px 4px;
+      display: flex;
+      justify-content: space-around;
+      img {
+        width: 10px;
+      }
+      p {
+        font-size: 10px;
+      }
+    }
+  }
+  .categories {
+    padding: 10px 0;
+    li {
+      font-size: 10px;
+    }
+    .searchBlock {
+      display: none;
+    }
+    .popupCategory {
+      display: none;
+    }
+  }
+  .cards {
+    .card {
+      width: 140px;
+      height: 240px;
+      p {
+        font-size: 12px;
+      }
+      .bottomDetails {
+        flex-direction: column;
+
+        .addItemButton {
+          width: 80px;
+          margin-top: 6px;
+          .addButtonCount {
+            font-size: 11px;
+          }
+        }
+      }
+      .imageCard {
+        img {
+          width: 100px;
+          height: 100px;
+        }
       }
     }
   }

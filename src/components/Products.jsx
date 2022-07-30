@@ -7,7 +7,9 @@ const Products = ({ id, imageUrl, title, price, category }) => {
       <div className="imageCard">
         <img src={imageUrl} alt="monopoly" />
       </div>
-      <p className="flex-1 pt-2">{title}</p>
+      <p className="flex flex-1 pt-2 justify-center items-center text-xl font-semibold">
+        {title}
+      </p>
       <div className="bottomDetails">
         <p className="priceDetail">
           <span>{price}</span> руб
