@@ -3,9 +3,14 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [navIndex, setNavIndex] = useState(0);
-  const navigationItems = ["Главная", "О нас", "Контакты"];
   const onClickNavIndex = (index) => {
     setNavIndex(index);
+  };
+  const navigationItems = {
+    Главная: "/",
+    Доставка: "/delivery",
+    "О магазине": "/about",
+    Корзина: "/cart",
   };
   return (
     <nav>
@@ -18,22 +23,17 @@ const Header = () => {
       </Link>
 
       <div className="headerNav">
-        {navigationItems.map((item, index) => (
-          <p
-            key={index}
-            onClick={() => onClickNavIndex(index)}
-            className={navIndex === index ? "activeNav" : ""}
-          >
-            {item}
-          </p>
+        {Object.keys(navigationItems).map((key, index) => (
+          <Link to={`${navigationItems[key]}`} key={index}>
+            <p
+              onClick={() => onClickNavIndex(index)}
+              className={navIndex === index ? "activeNav" : ""}
+            >
+              {key}
+            </p>
+          </Link>
         ))}
       </div>
-      <Link to="/cart">
-        <div className="cartBlock">
-          <img src="img/cart.png" />
-          <p>Корзина</p>
-        </div>
-      </Link>
     </nav>
   );
 };

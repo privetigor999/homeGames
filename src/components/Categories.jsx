@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Categories = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const Categories = ({
+  categoryIndex,
+  onClickCategory,
+  searchValue,
+  setSearchValue,
+  setCurrentPage,
+}) => {
   const categories = [
     "Все",
     "Для компании",
@@ -9,52 +14,30 @@ const Categories = () => {
     "Для влюбленных",
     "Для детей",
   ];
-
-  const [isVisisblePopup, setIsVisiblePopup] = useState(false);
-  const popupCategories = ["популярности", "цене", "поназванию"];
-  const [currentListIndex, setCurrentListIndex] = useState(0);
-  const onClickListCategory = (index) => {
-    setCurrentListIndex(index);
-    setIsVisiblePopup(!isVisisblePopup);
+  const handleClickCategory = (index) => {
+    onClickCategory(index);
+    setSearchValue("");
+    setCurrentPage(1);
   };
-
-  const onClickCategory = (index) => {
-    setActiveIndex(index);
-  };
-
   return (
     <ul className="categories">
       {categories.map((category, index) => (
         <li
           key={index}
-          onClick={() => onClickCategory(index)}
-          className={activeIndex === index ? "activeCategory" : undefined}
+          onClick={() => handleClickCategory(index)}
+          className={categoryIndex === index ? "activeCategory" : undefined}
         >
           {category}
         </li>
       ))}
 
       <div className="searchBlock">
-        <input placeholder="Поиск ..." />
+        <input
+          placeholder="Поиск ..."
+          value={searchValue}
+          onChange={(event) => setSearchValue(event.target.value)}
+        />
         <img src="img/search.png" alt="search" />
-      </div>
-      <div className="popupCategory">
-        <p>Сортировать по:</p>
-        <span onClick={() => setIsVisiblePopup(!isVisisblePopup)}>
-          {popupCategories[currentListIndex]}
-        </span>
-        <div className="popupList">
-          {isVisisblePopup &&
-            popupCategories.map((category, index) => (
-              <p
-                onClick={() => onClickListCategory(index)}
-                key={index}
-                className="popupItem"
-              >
-                {category}
-              </p>
-            ))}
-        </div>
       </div>
     </ul>
   );
