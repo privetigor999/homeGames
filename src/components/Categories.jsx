@@ -1,12 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import SearchBlock from "./SearchBlock";
+import { SearchContext } from "../pages/Home";
 
-const Categories = ({
-  categoryIndex,
-  onClickCategory,
-  searchValue,
-  setSearchValue,
-  setCurrentPage,
-}) => {
+const Categories = ({ categoryIndex, onClickCategory, setCurrentPage }) => {
   const categories = [
     "Все",
     "Для компании",
@@ -19,6 +15,8 @@ const Categories = ({
     setSearchValue("");
     setCurrentPage(1);
   };
+
+  const { setSearchValue } = useContext(SearchContext);
   return (
     <ul className="categories">
       {categories.map((category, index) => (
@@ -31,14 +29,7 @@ const Categories = ({
         </li>
       ))}
 
-      <div className="searchBlock">
-        <input
-          placeholder="Поиск ..."
-          value={searchValue}
-          onChange={(event) => setSearchValue(event.target.value)}
-        />
-        <img src="img/search.png" alt="search" />
-      </div>
+      <SearchBlock />
     </ul>
   );
 };

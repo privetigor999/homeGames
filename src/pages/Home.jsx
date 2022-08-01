@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import Categories from "../components/Categories";
 import Products from "../components/Products";
 import Skeleton from "../components/Skeleton";
 import Pagination from "../components/Pagination/Pagination";
+
+export const SearchContext = createContext();
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -41,22 +43,22 @@ const Home = () => {
   const games = items.map((item) => <Products key={item.id} {...item} />);
   return (
     <>
-      <Categories
-        categoryIndex={categoryIndex}
-        onClickCategory={(i) => setCategoryIndex(i)}
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        setCurrentPage={setCurrentPage}
-      />
-      <p className="mainTitle">
-        {searchValue
-          ? "Поиск по значению: " + searchValue
-          : `Категория: ${categories[categoryIndex].toLowerCase()}`}
-      </p>
-      <div className="cards">{isLoading ? skeletons : games}</div>
-      {categoryIndex === 0 && (
-        <Pagination onChangePage={(num) => setCurrentPage(num)} />
-      )}
+      <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+        <Categories
+          categoryIndex={categoryIndex}
+          onClickCategory={(i) => setCategoryIndex(i)}
+          setCurrentPage={setCurrentPage}
+        />
+        <p className="mainTitle">
+          {searchValue
+            ? "Поиск по значению: " + searchValue
+            : `Категория: ${categories[categoryIndex].toLowerCase()}`}
+        </p>
+        <div className="cards">{isLoading ? skeletons : games}</div>
+        {categoryIndex === 0 && (
+          <Pagination onChangePage={(num) => setCurrentPage(num)} />
+        )}
+      </SearchContext.Provider>
     </>
   );
 };
