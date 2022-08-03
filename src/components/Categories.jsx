@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import SearchBlock from "./SearchBlock";
 import { SearchContext } from "../pages/Home";
+import { useSelector } from "react-redux";
 
-const Categories = ({ categoryIndex, onClickCategory, setCurrentPage }) => {
+const Categories = ({ onClickCategory, setCurrentPage }) => {
+  const categoryIndex = useSelector((state) => state.filter.categoryIndex);
   const categories = [
     "Все",
     "Для компании",

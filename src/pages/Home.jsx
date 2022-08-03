@@ -1,29 +1,43 @@
 import { useState, useEffect, createContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import Categories from "../components/Categories";
 import Products from "../components/Products";
 import Skeleton from "../components/Skeleton";
 import Pagination from "../components/Pagination/Pagination";
+import {
+  setCategoryIndex,
+  setCurrentPage,
+} from "./../features/filter/filterSlice";
 
 export const SearchContext = createContext();
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const { categoryIndex, currentPage } = useSelector((state) => state.filter);
+
+  const onChangeCategory = (index) => {
+    dispatch(setCategoryIndex(index));
+  };
+
   const [items, setItems] = useState([]);
   const [isLoading, setIsloading] = useState(true);
-  const [categoryIndex, setCategoryIndex] = useState(0);
   const [searchValue, setSearchValue] = useState("".trim());
-  const [currentPage, setCurrentPage] = useState(1);
-
   const category = categoryIndex > 0 ? `category=${categoryIndex}` : "";
   const search = searchValue ? `&search=${searchValue}` : "";
-  console.log(searchValue);
+
+  const handleChangePage = (number) => {
+    dispatch(setCurrentPage(number));
+  };
+
   useEffect(() => {
     setIsloading(true);
-    fetch(
-      `https://62e2b9d23891dd9ba8eec3f3.mockapi.io/items?page=${currentPage}&limit=12&${category}${search}`
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        setItems(json);
+    axios
+      .get(
+        `https://62e2b9d23891dd9ba8eec3f3.mockapi.io/items?page=${currentPage}&limit=12&${category}${search}`
+      )
+      .then((response) => {
+        setItems(response.data);
         setIsloading(false);
       });
     window.scrollTo(0, 0);
@@ -45,8 +59,7 @@ const Home = () => {
     <>
       <SearchContext.Provider value={{ searchValue, setSearchValue }}>
         <Categories
-          categoryIndex={categoryIndex}
-          onClickCategory={(i) => setCategoryIndex(i)}
+          onClickCategory={onChangeCategory}
           setCurrentPage={setCurrentPage}
         />
         <p className="mainTitle">
@@ -56,7 +69,10 @@ const Home = () => {
         </p>
         <div className="cards">{isLoading ? skeletons : games}</div>
         {categoryIndex === 0 && (
-          <Pagination onChangePage={(num) => setCurrentPage(num)} />
+          <Pagination
+            currentPage={currentPage}
+            onChangePage={handleChangePage}
+          />
         )}
       </SearchContext.Provider>
     </>

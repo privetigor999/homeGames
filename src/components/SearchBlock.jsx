@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
+import debounce from "lodash.debounce";
 import { SearchContext } from "../pages/Home";
 
 const SearchBlock = () => {
   const { searchValue, setSearchValue } = useContext(SearchContext);
+
   return (
     <div className="searchBlock">
       <input
