@@ -1,7 +1,22 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../features/cart/cartSlice";
 
-const Products = ({ id, imageUrl, title, price, category }) => {
-  const [count, setCount] = useState(0);
+const Products = ({ id, imageUrl, title, price }) => {
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state) =>
+    state.cart.items.find((obj) => obj.id === id)
+  );
+  const addedCount = cartItem ? cartItem.count : 0;
+  const handleAddItem = () => {
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+    };
+    dispatch(addItem(item));
+  };
   return (
     <div className="card">
       <div className="imageCard">
@@ -14,9 +29,9 @@ const Products = ({ id, imageUrl, title, price, category }) => {
         <p className="priceDetail">
           <span>{price}</span> руб
         </p>
-        <button className="addItemButton" onClick={() => setCount(count + 1)}>
+        <button className="addItemButton" onClick={handleAddItem}>
           <p className="addButtonCount">
-            Добавить {count > 0 && <span>{count}</span>}
+            Добавить {addedCount > 0 && <span>{addedCount}</span>}
           </p>
         </button>
       </div>

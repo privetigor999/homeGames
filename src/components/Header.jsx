@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [navIndex, setNavIndex] = useState(0);
+  const { totalPrice, totalItems } = useSelector((state) => state.cart);
+
   const onClickNavIndex = (index) => {
     setNavIndex(index);
   };
@@ -10,8 +13,8 @@ const Header = () => {
     Главная: "/",
     Доставка: "/delivery",
     "О магазине": "/about",
-    Корзина: "/cart",
   };
+
   return (
     <nav>
       <Link to="/">
@@ -34,6 +37,18 @@ const Header = () => {
           </Link>
         ))}
       </div>
+      <Link to="/cart">
+        <div className="cart">
+          <p>
+            <b>{totalPrice}</b> руб
+          </p>
+          /
+          <div className="cartTotalItems">
+            <img src="img/cartWhite.png" alt="cart" />
+            <b>{totalItems}</b>
+          </div>
+        </div>
+      </Link>
     </nav>
   );
 };

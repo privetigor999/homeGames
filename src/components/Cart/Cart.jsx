@@ -1,47 +1,43 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearItems } from "./../../features/cart/cartSlice";
 import { Link } from "react-router-dom";
+import CartItem from "./CartItem/CartItem";
+import EmptyCart from "./EmptyCart/EmptyCart";
 import styles from "./Cart.module.scss";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const { totalPrice, totalItems, items } = useSelector((state) => state.cart);
+  const removeAllItems = () => {
+    dispatch(clearItems());
+  };
+
+  if (!totalPrice) {
+    return <EmptyCart />;
+  }
+
   return (
     <div className={styles.cart}>
       <div className={styles.header}>
         <p className={styles.headerText}>Список товаров в корзине:</p>
-        <div className={styles.removeAllButton}>
+        <div className={styles.removeAllButton} onClick={removeAllItems}>
           <img src="img/bin.png" alt="bin" />
           <p>Очистить корзину</p>
         </div>
       </div>
       <div className={styles.cartList}>
-        <div className={styles.cartItem}>
-          <img
-            className={styles.cartItemImg}
-            src="img/products/1.png"
-            alt="item"
-          />
-          <p className={styles.cartItemTitle}>Монополия</p>
-          <div className={styles.plusAndMinusButtons}>
-            <img src="img/minus.png" alt="minus" />
-            <p>1</p>
-            <img src="img/plus.png" alt="plus" />
-          </div>
-          <p>
-            <b>100</b> руб
-          </p>
-          <img
-            src="img/remove.png"
-            alt="remove"
-            className={styles.removeItemButton}
-          />
-        </div>
+        {items.map((item) => (
+          <CartItem key={item.id} {...item} />
+        ))}
       </div>
       <div className={styles.bottomCart}>
         <div className={styles.totalItemsAndTotalPrice}>
           <p>
-            Всего товаров: <span>5</span>
+            Всего товаров: <span>{totalItems}</span>
           </p>
           <p>
-            Общая сумма: <span>100</span> рублей
+            Общая сумма: <span>{totalPrice}</span> рублей
           </p>
         </div>
         <div className={styles.bottomButtons}>

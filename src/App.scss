@@ -43,6 +43,31 @@ nav {
       color: #ffffff;
     }
   }
+  .cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #615c86;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    width: 160px;
+    cursor: pointer;
+    p {
+      padding: 0 4px;
+    }
+    .cartTotalItems {
+      display: flex;
+      align-items: center;
+      img {
+        width: 24px;
+        padding: 0 4px;
+      }
+    }
+  }
+  .cart:hover {
+    background: lighten($color: #615c86, $amount: 10);
+  }
 }
 
 .categories {
