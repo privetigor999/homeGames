@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import SearchBlock from "./SearchBlock";
 import { SearchContext } from "../pages/Home";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentPage } from "../features/filter/filterSlice";
 
-const Categories = ({ onClickCategory, setCurrentPage }) => {
+const Categories = ({ onClickCategory }) => {
+  const dispatch = useDispatch();
   const categoryIndex = useSelector((state) => state.filter.categoryIndex);
   const categories = [
     "Все",
@@ -15,7 +17,7 @@ const Categories = ({ onClickCategory, setCurrentPage }) => {
   const handleClickCategory = (index) => {
     onClickCategory(index);
     setSearchValue("");
-    setCurrentPage(1);
+    dispatch(setCurrentPage(1));
   };
 
   const { setSearchValue } = useContext(SearchContext);

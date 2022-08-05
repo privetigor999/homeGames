@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../features/cart/cartSlice";
+import { addItem, selectorCartItems } from "../features/cart/cartSlice";
 
 const Products = ({ id, imageUrl, title, price }) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector((state) =>
-    state.cart.items.find((obj) => obj.id === id)
-  );
+  const cartItem = useSelector(selectorCartItems(id));
   const addedCount = cartItem ? cartItem.count : 0;
   const handleAddItem = () => {
     const item = {
@@ -20,7 +18,7 @@ const Products = ({ id, imageUrl, title, price }) => {
   return (
     <div className="card">
       <div className="imageCard">
-        <img src={imageUrl} alt="monopoly" />
+        <img src={imageUrl} alt="image" />
       </div>
       <p className="flex flex-1 pt-2 justify-center items-center text-xl font-semibold">
         {title}

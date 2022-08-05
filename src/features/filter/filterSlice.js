@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   categoryIndex: 0,
   currentPage: 1,
+  searchValue: "",
 };
 
 const filterSlice = createSlice({
@@ -15,8 +16,13 @@ const filterSlice = createSlice({
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
+    setSearchValue: (state, action) => {
+      state.searchValue = action.payload;
+    },
   },
 });
+
+export const selectorFilter = (state) => state.filter;
 
 export const { setCategoryIndex, setCurrentPage } = filterSlice.actions;
 export default filterSlice.reducer;
