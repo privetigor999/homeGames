@@ -1,6 +1,5 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import Categories from "../components/Categories";
 import Products from "../components/Products";
 import Skeleton from "../components/Skeleton";
@@ -9,11 +8,10 @@ import {
   setCategoryIndex,
   setCurrentPage,
   selectorFilter,
+  selectorSearchValue,
 } from "./../features/filter/filterSlice";
 import { fetchGames, selectorGames } from "../features/gamesSlice/gamesSlice";
 import ErrorBlock from "../components/ErrorBlock/ErrorBlock";
-
-export const SearchContext = createContext();
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -22,8 +20,7 @@ const Home = () => {
   const onChangeCategory = (index) => {
     dispatch(setCategoryIndex(index));
   };
-
-  const [searchValue, setSearchValue] = useState("".trim());
+  const searchValue = useSelector(selectorSearchValue);
 
   const handleChangePage = (number) => {
     dispatch(setCurrentPage(number));
@@ -61,27 +58,20 @@ const Home = () => {
   const games = items.map((item) => <Products key={item.id} {...item} />);
   return (
     <>
-      <SearchContext.Provider value={{ searchValue, setSearchValue }}>
-        <Categories onClickCategory={onChangeCategory} />
-        <p className="mainTitle">
-          {searchValue
-            ? "Поиск по значению: " + searchValue
-            : `Категория: ${categories[categoryIndex].toLowerCase()}`}
-        </p>
-        {status === "error" ? (
-          <ErrorBlock />
-        ) : (
-          <div className="cards">
-            {status === "loading" ? skeletons : games}
-          </div>
-        )}
-        {categoryIndex === 0 && (
-          <Pagination
-            currentPage={currentPage}
-            onChangePage={handleChangePage}
-          />
-        )}
-      </SearchContext.Provider>
+      <Categories onClickCategory={onChangeCategory} />
+      <p className="mainTitle">
+        {searchValue
+          ? "Поиск по значению: " + searchValue
+          : `Категория: ${categories[categoryIndex].toLowerCase()}`}
+      </p>
+      {status === "error" ? (
+        <ErrorBlock />
+      ) : (
+        <div className="cards">{status === "loading" ? skeletons : games}</div>
+      )}
+      {categoryIndex === 0 && (
+        <Pagination currentPage={currentPage} onChangePage={handleChangePage} />
+      )}
     </>
   );
 };

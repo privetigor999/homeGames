@@ -28,17 +28,14 @@ const gamesSlice = createSlice({
     [fetchGames.pending]: (state) => {
       state.status = "loading";
       state.items = [];
-      console.log("pending");
     },
     [fetchGames.fulfilled]: (state, action) => {
       state.items = action.payload;
       state.status = "success";
-      console.log("ok");
     },
     [fetchGames.rejected]: (state) => {
       state.status = "error";
       state.items = [];
-      console.log("rejected");
     },
   },
 });

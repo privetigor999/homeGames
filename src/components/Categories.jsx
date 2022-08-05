@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import SearchBlock from "./SearchBlock";
-import { SearchContext } from "../pages/Home";
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentPage } from "../features/filter/filterSlice";
+import { setCurrentPage, setSearchValue } from "../features/filter/filterSlice";
 
 const Categories = ({ onClickCategory }) => {
   const dispatch = useDispatch();
@@ -20,7 +19,6 @@ const Categories = ({ onClickCategory }) => {
     dispatch(setCurrentPage(1));
   };
 
-  const { setSearchValue } = useContext(SearchContext);
   return (
     <ul className="categories">
       {categories.map((category, index) => (
